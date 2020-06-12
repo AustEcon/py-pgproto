@@ -65,35 +65,28 @@ ctypedef char (*get_message_type_method)(object)
 
 cdef class ReadBuffer:
     cdef:
-        # A deque of buffers (bytes objects)
-        object _bufs
-        object _bufs_append
-        object _bufs_popleft
-
-        # A pointer to the first buffer in `_bufs`
-        bytes _buf0
-
-        # A pointer to the previous first buffer
-        # (used to prolong the life of _buf0 when using
-        # methods like _try_read_bytes)
-        bytes _buf0_prev
+        public object _bufs
+        public object _bufs_append
+        public object _bufs_popleft
+        public bytes _buf0
+        public bytes _buf0_prev
 
         # Number of buffers in `_bufs`
-        int32_t _bufs_len
+        public int32_t _bufs_len
 
         # A read position in the first buffer in `_bufs`
-        ssize_t _pos0
+        public ssize_t _pos0
 
         # Length of the first buffer in `_bufs`
-        ssize_t _len0
+        public ssize_t _len0
 
         # A total number of buffered bytes in ReadBuffer
-        ssize_t _length
+        public ssize_t _length
 
-        char _current_message_type
-        int32_t _current_message_len
-        ssize_t _current_message_len_unread
-        bint _current_message_ready
+        public char _current_message_type
+        public int32_t _current_message_len
+        public ssize_t _current_message_len_unread
+        public bint _current_message_ready
 
     cdef inline len(self):
         return self._length
