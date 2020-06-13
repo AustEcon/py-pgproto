@@ -246,6 +246,51 @@ cdef class ReadBuffer:
         self._current_message_len_unread = 0
         self._current_message_ready = 0
 
+    def __getstate__(self):
+        return (
+            self._bufs,
+            self._bufs_append,
+            self._bufs_popleft,
+            self._bufs_len,
+            self._buf0,
+            self._buf0_prev,
+            self._pos0,
+            self._len0,
+            self._length,
+            self._current_message_type,
+            self._current_message_len,
+            self._current_message_len_unread,
+            self._current_message_ready,)
+
+    def __setstate__(self, state):
+        # unpack
+        (_bufs,
+        _bufs_append,
+        _bufs_popleft,
+        _bufs_len,
+        _buf0,
+        _buf0_prev,
+        _pos0,
+        _len0,
+        _length,
+        _current_message_type,
+        _current_message_len,
+        _current_message_len_unread,
+        _current_message_ready) = state
+        self._bufs = _bufs
+        self._bufs_append = _bufs_append
+        self._bufs_popleft = _bufs_popleft
+        self._bufs_len = _bufs_len
+        self._buf0 = _buf0
+        self._buf0_prev = _buf0_prev
+        self._pos0 = _pos0
+        self._len0 = _len0
+        self._length = _length
+        self._current_message_type = _current_message_type
+        self._current_message_len = _current_message_len
+        self._current_message_len_unread = _current_message_len_unread
+        self._current_message_ready = _current_message_ready
+
     cdef feed_data(self, data):
         cdef:
             ssize_t dlen
